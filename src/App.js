@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { BsFacebook, BsTwitter, BsPinterest } from "react-icons/bs";
+import CollapsibleWidget from "./components/CollapsibleWidget/CollapsibleWidget";
+import "./App.scss";
 
-function App() {
+const App = () => {
+  const [count, setCount] = useState(0);
+  const pageTitle = document.title;
+  const pageLink = window.location.href;
+
+  const increaseCount = () => {
+    setCount(count + 1);
+  };
+
+  const actions = [
+    {
+      label: "Twitter",
+      icon: <BsTwitter />,
+      navigate: () => {
+        increaseCount();
+        window.open(
+          `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageLink}`,
+          "sharer",
+          "toolbar=0,status=0,width=626,height=436"
+        );
+      },
+    },
+    {
+      label: "Facebook",
+      icon: <BsFacebook />,
+      navigate: () => {
+        increaseCount();
+        window.open(
+          `http://www.facebook.com/sharer.php?u=${pageLink}&quote=${pageTitle}`,
+          "sharer",
+          "toolbar=0,status=0,width=626,height=436"
+        );
+      },
+    },
+    {
+      label: "Pinterest",
+      icon: <BsPinterest />,
+      navigate: () => {
+        increaseCount();
+        window.open(
+          `https://www.pinterest.com/pin/create/button/?&text=${pageTitle}&url=${pageLink}&description=${pageTitle}`,
+          "sharer",
+          "toolbar=0,status=0,width=626,height=436"
+        );
+      },
+    },
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <div className="count">Count: {count}</div>
+      <CollapsibleWidget actions={actions} />
+    </main>
   );
-}
+};
 
 export default App;
