@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BsFacebook, BsTwitter, BsPinterest } from "react-icons/bs";
+import { BsFacebook, BsTwitter, BsPinterest, BsWhatsapp } from "react-icons/bs";
 import CollapsibleWidget from "./components/CollapsibleWidget/CollapsibleWidget";
 import "./App.scss";
 
@@ -16,45 +16,29 @@ const App = () => {
     {
       label: "Twitter",
       icon: <BsTwitter />,
-      navigate: () => {
-        increaseCount();
-        window.open(
-          `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageLink}`,
-          "sharer",
-          "toolbar=0,status=0,width=626,height=436"
-        );
-      },
+      URL: `https://twitter.com/share?url=${pageLink}&text=${pageTitle}`,
     },
     {
       label: "Facebook",
       icon: <BsFacebook />,
-      navigate: () => {
-        increaseCount();
-        window.open(
-          `http://www.facebook.com/sharer.php?u=${pageLink}&quote=${pageTitle}`,
-          "sharer",
-          "toolbar=0,status=0,width=626,height=436"
-        );
-      },
+      URL: `http://www.facebook.com/sharer.php?u=${pageLink}&quote=${pageTitle}`,
     },
     {
       label: "Pinterest",
       icon: <BsPinterest />,
-      navigate: () => {
-        increaseCount();
-        window.open(
-          `https://www.pinterest.com/pin/create/button/?&text=${pageTitle}&url=${pageLink}&description=${pageTitle}`,
-          "sharer",
-          "toolbar=0,status=0,width=626,height=436"
-        );
-      },
+      URL: `https://pinterest.com/pin/create/bookmarklet/?media=[post-img]&url=${pageLink}&is_video=[is_video]&description=${pageTitle}`,
+    },
+    {
+      label: "WhatsApp",
+      icon: <BsWhatsapp />,
+      URL: `https://wa.me/?text=${pageTitle} ${pageLink}`,
     },
   ];
 
   return (
     <main>
       <div className="count">Count: {count}</div>
-      <CollapsibleWidget actions={actions} />
+      <CollapsibleWidget actions={actions} increaseCount={increaseCount} />
     </main>
   );
 };

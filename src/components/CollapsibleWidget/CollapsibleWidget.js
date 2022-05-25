@@ -1,31 +1,28 @@
 import { useState } from "react";
 import cn from "classnames";
-import { MdShare } from "react-icons/md";
+import { MdShare, MdCancel } from "react-icons/md";
 
 import "./CollapsibleWidget.scss";
 
-const FAB = ({ actions }) => {
+const FAB = ({ actions, increaseCount }) => {
   const [open, setOpen] = useState(false);
 
-  const mouseEnter = () => setOpen(true);
-
-  const mouseLeave = () => setOpen(false);
+  const handleClick = (action) => {
+    increaseCount();
+    window.open(action.URL);
+  };
 
   return (
-    <ul
-      className="fab-container"
-      onMouseEnter={mouseEnter}
-      onMouseLeave={mouseLeave}
-    >
-      <li className="fab-button">
-        <MdShare />
+    <ul className="fab-container">
+      <li className="fab-button" onClick={() => setOpen(!open)}>
+        {open ? <MdCancel /> : <MdShare />}
       </li>
       {actions.map((action, index) => (
         <li
           style={{ transitionDelay: `${index * 25}ms` }}
           className={cn("fab-action", { open })}
           key={action.label}
-          onClick={action.navigate}
+          onClick={() => handleClick(action)}
         >
           {action.icon}
           <span className="tooltip">{action.label}</span>
